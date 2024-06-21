@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal health_depleted
+
 var health: float = 100.0
 
 func _physics_process(delta: float) -> void:
@@ -16,6 +18,7 @@ func _physics_process(delta: float) -> void:
 	var overlapping_mobs: Array[Node2D] = %HurtBox.get_overlapping_bodies()
 	if overlapping_mobs.size() > 0:
 		health -= overlapping_mobs.size() * DAMAGE_RATE * delta
+		%ProgressBar.value = health
 
 		if health <= 0.0:
-			pass
+			health_depleted.emit()
