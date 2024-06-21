@@ -9,4 +9,10 @@ func _physics_process(delta: float) -> void:
 func shoot() -> void:
 	const BULLET: PackedScene = preload("res://pistol/bullet.tscn")
 	var new_bullet: Node = BULLET.instantiate()
-	new_bullet
+	new_bullet.global_position = %ShootingPoint.global_position
+	new_bullet.global_rotation = %ShootingPoint.global_rotation
+	%ShootingPoint.add_child(new_bullet)
+
+
+func _on_timer_timeout() -> void:
+	shoot()
